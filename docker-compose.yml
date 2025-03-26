@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginxproxy/nginx-proxy:latest
+    restart: always
+    container_name: nginx-proxy
+    cap_add:
+      - NET_BIND_SERVICE
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "${XDG_RUNTIME_DIR:-/var/run}/docker.sock:/tmp/docker.sock:ro"
+      - vhost:/etc/nginx/vhost.d
+      - certs:/etc/nginx/certs
+      - share:/usr/share/nginx/html
+      - ${PWD}/custom-nginx.conf:/etc/nginx/conf.d/custom.conf:ro
+    networks:
+      - proxy-network
+  
+  certbot:
+    image: nginxproxy/acme-companion:latest
+    restart: always
+    container_name: certbot
+    volumes_from:
+      - nginx
+    volumes:
+      - "${XDG_RUNTIME_DIR:-/var/run}/docker.sock:/var/run/docker.sock:ro"
+      - acme:/etc/acme.sh
+    networks:
+      - proxy-network
+    environment:
+      - DEFAULT_EMAIL=${LETSENCRYPT_EMAIL}
+
+networks:
+  proxy-network:
+
+volumes:
+  vhost:
+  share:
+  certs:
+  acme:
