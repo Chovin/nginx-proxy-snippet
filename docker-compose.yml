@@ -35,6 +35,7 @@ services:
 
 networks:
   proxy-network:
+    name: ${NETWORK_NAME:-proxy-network}
 
 volumes:
   vhost:
