@@ -13,7 +13,7 @@ services:
     volumes:
       - "${XDG_RUNTIME_DIR:-/var/run}/docker.sock:/tmp/docker.sock:ro"
       - vhost:/etc/nginx/vhost.d
-      - ./certs:/etc/nginx/certs:ro
+      - ./certs:/etc/nginx/certs:rw
       - share:/usr/share/nginx/html
       - ${PWD}/${CUSTOM_NGINX_CONF}:/etc/nginx/conf.d/custom.conf:ro
     networks:
