@@ -15,7 +15,7 @@ services:
       - vhost:/etc/nginx/vhost.d
       - certs:/etc/nginx/certs
       - share:/usr/share/nginx/html
-      - ${PWD}/custom-nginx.conf:/etc/nginx/conf.d/custom.conf:ro
+      - ${PWD}/${CUSTOM_NGINX_CONF}:/etc/nginx/conf.d/custom.conf:ro
     networks:
       - proxy-network
   
