@@ -34,3 +34,10 @@ services:
             # just remember to setup letsencrypt as well
             LESTENCRYPT_HOST: pma.blah.com
 ```
+
+# FAQ
+
+1. getting `Error response from daemon: error while creating mount source path '.../certs': mkdir .../certs: permission denied`:
+   check your folder permissions, or it might be SELinux. If it's SELinux, change `/etc/selinux/config` to `permissive`, restart the server `sudo shutdown -r now`, `docker compose up -d`, set it back to `enforced`, restart again `sudo shutdown -r now`, and finally see if it works: `docker compose up -d`
+2. custom certs not working:
+   It may be file permissions, they should be owned by you in rootless mode
