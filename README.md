@@ -2,6 +2,9 @@
 
 Set this up alongside any containers you want to reverse proxy / add letsencrypt to
 
+run with `docker compose up -d`.
+might need to `docker network remove proxy-network` if it was orphaned from prior runs
+
 example containers you might run behind this
 
 `docker-compose.yml`
